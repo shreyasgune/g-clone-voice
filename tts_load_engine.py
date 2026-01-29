@@ -7,7 +7,7 @@ class QwenTTS:
     def __init__(self, model_name="Qwen/Qwen3-TTS-12Hz-1.7B-Base"):
         local_dir = os.environ.get("QC_MODEL_DIR") or os.path.join("models", model_name.split("/")[-1])
         if os.path.isdir(local_dir):
-            # Load from local directory (useful for bundled/offline builds)
+            # Load from local directory (if you have pre-downloaded the model, we will use it, else we're gonna download it from DA HUGGIN FACE HUB)
             self.model = Qwen3TTSModel.from_pretrained(
                 local_dir,
                 device_map="auto",
@@ -16,12 +16,12 @@ class QwenTTS:
             )
         else:
             try:
-                #load from hub
+                #downloadin from huggin face, its like 3.6GB
                 self.model = Qwen3TTSModel.from_pretrained(
                     model_name,
                     device_map="auto",
                     dtype=torch.float32,
-                    attn_implementation="sdpa",
+                    attn_implementation="sdpa", #I'd change this to flash attention but I don't have a NVIDIA GPU to test with :(
                 )
             except Exception as e:
                 raise RuntimeError(

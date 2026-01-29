@@ -32,9 +32,9 @@ def check_cuda_support():
         log("CUDA not available. Falling back to CPU.")
         messagebox.showwarning(
             "CUDA Not Available",
-            "CUDA is not available on this system.\n\n"
+            "Sorry dude, CUDA is not available on this system.\n\n"
             "The application will use the CPU instead.\n"
-            "This may be slower."
+            "This WILL be slower, like glacial."
         )
         return "cpu"
 

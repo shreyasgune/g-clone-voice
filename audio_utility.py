@@ -1,3 +1,4 @@
+## Future stuff, you know, if we wanna use the mic for recording audio. Currently unused.
 import sounddevice as sd
 import soundfile as sf
 
