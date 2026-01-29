@@ -29,16 +29,19 @@ jobs:
             gui.py
         shell: powershell
 
+      - name: Install GitHub CLI
+        run: |
+          winget install --id GitHub.cli -e --silent
+        shell: powershell
+
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: "v${{ github.run_number }}"
-          release_name: "Release v${{ github.run_number }}"
-          draft: false
-          prerelease: false
+        run: |
+          gh release create v${{ github.run_number }} dist/gui.exe \
+            --title "Release v${{ github.run_number }}" \
+            --notes "Automated release from GitHub Actions."
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.REPO_PAT }}
+        shell: powershell
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
