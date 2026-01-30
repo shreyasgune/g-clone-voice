@@ -31,7 +31,7 @@ jobs:
         shell: powershell
 
       - name: Upload Windows artifact
-        uses: actions/artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: gui-windows
           path: dist/app.exe
@@ -62,7 +62,7 @@ jobs:
           app.py
 
       - name: Upload macOS artifact
-        uses: actions/artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: gui-macos
           path: dist/app.app
