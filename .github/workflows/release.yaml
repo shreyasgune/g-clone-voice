@@ -1,4 +1,4 @@
-name: Build and Release GUI
+name: Build and Release g-clone-voice
 
 on:
   workflow_dispatch:
@@ -27,9 +27,7 @@ jobs:
             --add-data "data\voices;data/voices" `
             --add-data "data\outputs;data/outputs" `
             --add-data "mel_filters.npz;whisper/assets" `
-          gui.py
-
-            
+          gui.py   
         shell: powershell
 
       - name: Create Release
