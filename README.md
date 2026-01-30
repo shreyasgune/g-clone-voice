@@ -4,7 +4,7 @@ Clone the voice, make it say things.
 
 ## PIP stuff
 ```
-pip install torch soundfile sounddevice qwen-tts sounddevice openai-whisper
+pip install torch soundfile sounddevice qwen-tts sounddevice openai-whisper huggingface-hub
 ```
 
 ## Packaging to EXE (Windows)

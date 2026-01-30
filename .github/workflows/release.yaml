@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -19,34 +18,51 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller torch soundfile sounddevice qwen-tts openai-whisper
+          pip install pyinstaller torch soundfile sounddevice qwen-tts openai-whisper huggingface-hub
 
-      - name: Build executable
+      - name: Build Windows executable
         run: |
           pyinstaller --noconfirm --onefile --windowed `
             --add-data "data\voices;data/voices" `
             --add-data "data\outputs;data/outputs" `
             --add-data "assets;whisper/assets" `
-          gui.py   
+            --add-data "models;models" `
+          app.py   
         shell: powershell
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: "v${{ github.run_number }}"
-          release_name: "Release v${{ github.run_number }}"
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
+          name: gui-windows
+          path: dist/app.exe
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/gui.exe
-          asset_name: gui.exe
-          asset_content_type: application/octet-stream
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller torch soundfile sounddevice qwen-tts openai-whisper huggingface-hub
+
+      - name: Build macOS executable
+        run: |
+          pyinstaller --noconfirm --onefile --windowed \
+            --add-data "data/voices:data/voices" \
+            --add-data "data/outputs:data/outputs" \
+            --add-data "assets:whisper/assets" \
+            --add-data "models:models" \
+          app.py
+
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: gui-macos
+          path: dist/app.exe
