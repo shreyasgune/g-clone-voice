@@ -26,7 +26,7 @@ jobs:
           pyinstaller --noconfirm --onefile --windowed `
             --add-data "data\voices;data/voices" `
             --add-data "data\outputs;data/outputs" `
-            --add-data "mel_filters.npz;whisper/assets" `
+            --add-data "assets;whisper/assets" `
           gui.py   
         shell: powershell
 
