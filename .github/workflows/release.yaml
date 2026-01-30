@@ -24,7 +24,6 @@ jobs:
         run: |
           pyinstaller --noconfirm --onefile --windowed `
             --add-data "data;data" `
-            --add-data "data\outputs;data/outputs" `
             --add-data "assets;whisper/assets" `
             --add-data "models;models" `
           app.py   
@@ -56,7 +55,6 @@ jobs:
         run: |
           pyinstaller --noconfirm --onefile --windowed \
             --add-data "data;data" \
-            --add-data "data/outputs:data/outputs" \
             --add-data "assets:whisper/assets" \
             --add-data "models:models" \
           app.py
