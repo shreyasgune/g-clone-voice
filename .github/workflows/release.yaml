@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gui-windows
-          path: dist/app.ex
+          path: dist/app.exe
 
   build-macos:
     runs-on: macos-latest
