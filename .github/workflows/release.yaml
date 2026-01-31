@@ -6,6 +6,8 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
+    outputs:
+      artifact-path: dist/app.exe
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -38,6 +40,8 @@ jobs:
 
   build-macos:
     runs-on: macos-latest
+    outputs:
+      artifact-path: dist/app.app
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -61,11 +65,16 @@ jobs:
             --add-data "models:models" \
           app.py
 
+      - name: Zip macOS app
+        run: |
+          cd dist
+          zip -r app-macos.zip app.app
+
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
         with:
           name: gui-macos
-          path: dist/app.app
+          path: dist/app-macos.zip
 
   create-release:
     needs: [build-windows, build-macos]
