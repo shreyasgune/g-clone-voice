@@ -24,12 +24,7 @@ jobs:
 
       - name: Build Windows executable
         run: |
-          pyinstaller --noconfirm --onefile --windowed `
-            --add-data "data\voices;data/voices" `
-            --add-data "data\outputs;data/outputs" `
-            --add-data "assets;whisper/assets" `
-            --add-data "models;models" `
-          app.py   
+          pyinstaller --noconfirm --onefile --windowed --add-data "assets;whisper/assets" app.py
         shell: powershell
 
       - name: Upload Windows artifact
@@ -58,12 +53,7 @@ jobs:
 
       - name: Build macOS executable
         run: |
-          pyinstaller --noconfirm --onefile --windowed \
-            --add-data "data/voices:data/voices" \
-            --add-data "data/outputs:data/outputs" \
-            --add-data "assets:whisper/assets" \
-            --add-data "models:models" \
-          app.py
+          pyinstaller --noconfirm --onefile --windowed --add-data "assets:whisper/assets" app.py
 
       - name: Zip macOS app
         run: |
